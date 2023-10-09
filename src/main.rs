@@ -66,8 +66,22 @@ fn create_entry() -> Flash<Redirect> {
 
 #[get("/")]
 fn index() -> Template {
-    Template::render("index", context! {
-    })
+    use self::schema::entries::dsl::*;
+
+    let connection = &mut establish_connection();
+
+    let query_result = entries
+        .limit(5)
+        .select(Entry::as_select())
+        .load(connection)
+        .expect("Error loading entries");
+
+    let mut lits: Vec<Lit> = Vec::new();
+    for entry in query_result {
+        lits.push(Lit { id: entry.id, title: entry.title });
+    }
+
+    Template::render("index", context! { lits })
 }
 
 #[launch]

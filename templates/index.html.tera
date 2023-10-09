@@ -8,4 +8,7 @@
 
 <body>
     <p>testing testing</p>
+    {% for entry in lits %}
+        <p>{{loop.index}}. {{entry.title}}
+    {% endfor %}
 </body>
