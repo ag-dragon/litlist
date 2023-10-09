@@ -11,4 +11,5 @@
     {% if lit %}
         <p>{{lit.id}}. {{lit.title}}
     {% endif %}
+    <p><a href="/">Back</a></p>
 </body>

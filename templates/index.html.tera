@@ -9,6 +9,7 @@
 <body>
     <p>testing testing</p>
     {% for entry in lits %}
-        <p>{{loop.index}}. {{entry.title}}
+    <p><a href="entry/{{loop.index}}">{{loop.index}}. {{entry.title}}</a></p>
     {% endfor %}
+    <p><a href="create">Create</a></p>
 </body>
