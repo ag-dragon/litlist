@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>LitList</title>
+</head>
+
+<body>
+    <p>entry page testing</p>
+    {% if lit %}
+        <p>{{lit.id}}. {{lit.title}}
+    {% endif %}
+</body>

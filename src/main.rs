@@ -64,6 +64,32 @@ fn create_entry() -> Flash<Redirect> {
     Flash::success(Redirect::to("/"), "Entry successfully created.")
 }
 
+#[get("/entry/<entry_id>")]
+fn entry(entry_id: i32) -> Template {
+    use self::schema::entries::dsl::*;
+
+    let connection = &mut establish_connection();
+
+    let mut query_result = entries
+        .filter(id.eq(entry_id))
+        .select(Entry::as_select())
+        .load(connection)
+        .expect("Error loading entries");
+
+    let entry_o = query_result.pop();
+    let entry: Entry;
+    match entry_o {
+        Some(v) => entry = v,
+        _ => return Template::render("entry", context! {}),
+    }
+    let lit = Lit {
+        id: entry.id,
+        title: entry.title,
+    };
+
+    Template::render("entry", context! { lit })
+}
+
 #[get("/")]
 fn index() -> Template {
     use self::schema::entries::dsl::*;
@@ -89,5 +115,10 @@ fn rocket() -> _ {
     rocket::build()
         .attach(Template::fairing())
         .mount("/", FileServer::from(relative!("static")))
-        .mount("/", routes![index, get_random_lit, create_entry])
+        .mount("/", routes![
+            index,
+            get_random_lit,
+            create_entry,
+            entry,
+        ])
 }
