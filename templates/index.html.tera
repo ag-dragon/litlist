@@ -8,10 +8,10 @@
 
 <body>
     <p>testing testing</p>
-    {% for entry in lits %}
+    {% for story in lits %}
     <p>
-        <a href="entry/{{loop.index}}">{{entry.id}}. {{entry.title}}</a>
-        <form class="inline" action="/{{entry.id}}" method="post">
+        <a href="stories/{{story.id}}">{{story.id}}. {{story.title}}</a>
+        <form class="inline" action="/{{story.id}}" method="post">
             <input type="hidden" name="_method" value="delete" />
             <button type="submit">delete</button>
         </form>

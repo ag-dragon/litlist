@@ -7,7 +7,7 @@
 </head>
 
 <body>
-    <p>entry page testing</p>
+    <p>story page testing</p>
     {% if lit %}
         <p>{{lit.id}}. {{lit.title}}
     {% endif %}
