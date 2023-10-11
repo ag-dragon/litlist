@@ -5,13 +5,16 @@ pub mod schema;
 
 use models::*;
 
-use rocket::fs::{FileServer, relative};
-use rocket::serde::Serialize;
-use rocket::serde::json::Json;
-use rocket::response::{Redirect, Flash};
+use rocket::{
+    fs::{FileServer, relative},
+    serde::Serialize,
+    response::{Redirect, Flash},
+};
 use rocket_dyn_templates::{Template, context};
-use diesel::pg::PgConnection;
-use diesel::prelude::*;
+use diesel::{
+    pg::PgConnection,
+    prelude::*,
+};
 use dotenvy::dotenv;
 use std::env;
 
@@ -28,25 +31,6 @@ pub fn establish_connection() -> PgConnection {
 pub struct Lit {
     id: i32,
     title: String,
-}
-
-#[get("/random")]
-fn get_random_lit() -> Json<Lit> {
-    use self::schema::entries::dsl::*;
-
-    let connection = &mut establish_connection();
-    let mut results = entries
-        .limit(5)
-        .select(Entry::as_select())
-        .load(connection)
-        .expect("Error loading entires");
-    print!("{:?}", results.pop());
-    Json(
-        Lit {
-            id: 1,
-            title: "Test Lit".to_string(),
-        }
-    )
 }
 
 #[get("/create")]
@@ -117,7 +101,6 @@ fn rocket() -> _ {
         .mount("/", FileServer::from(relative!("static")))
         .mount("/", routes![
             index,
-            get_random_lit,
             create_entry,
             entry,
         ])
