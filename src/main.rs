@@ -48,6 +48,18 @@ fn create_entry() -> Flash<Redirect> {
     Flash::success(Redirect::to("/"), "Entry successfully created.")
 }
 
+#[delete("/<entry_id>")]
+fn delete_entry(entry_id: i32) -> Flash<Redirect> {
+    use self::schema::entries::dsl::*;
+
+    let connection = &mut establish_connection();
+    diesel::delete(entries.filter(id.eq(entry_id)))
+        .execute(connection)
+        .expect("Error deleting entries");
+
+    Flash::success(Redirect::to("/"), "Entry successfully deleted.")
+}
+
 #[get("/entry/<entry_id>")]
 fn entry(entry_id: i32) -> Template {
     use self::schema::entries::dsl::*;
@@ -102,6 +114,7 @@ fn rocket() -> _ {
         .mount("/", routes![
             index,
             create_entry,
+            delete_entry,
             entry,
         ])
 }

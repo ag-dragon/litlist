@@ -9,7 +9,13 @@
 <body>
     <p>testing testing</p>
     {% for entry in lits %}
-    <p><a href="entry/{{loop.index}}">{{loop.index}}. {{entry.title}}</a></p>
+    <p>
+        <a href="entry/{{loop.index}}">{{entry.id}}. {{entry.title}}</a>
+        <form class="inline" action="/{{entry.id}}" method="post">
+            <input type="hidden" name="_method" value="delete" />
+            <button type="submit">delete</button>
+        </form>
+    </p>
     {% endfor %}
     <p><a href="create">Create</a></p>
 </body>
