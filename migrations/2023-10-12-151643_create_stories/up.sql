@@ -1,4 +1,4 @@
-CREATE TABLE entries (
+CREATE TABLE stories (
     id SERIAL PRIMARY KEY,
     title VARCHAR NOT NULL
 )

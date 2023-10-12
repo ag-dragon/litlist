@@ -1,7 +1,7 @@
 // @generated automatically by Diesel CLI.
 
 diesel::table! {
-    entries (id) {
+    stories (id) {
         id -> Int4,
         title -> Varchar,
     }

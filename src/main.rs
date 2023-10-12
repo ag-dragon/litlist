@@ -35,45 +35,45 @@ pub struct Lit {
 
 #[get("/create")]
 fn create_story() -> Flash<Redirect> {
-    use schema::entries;
+    use schema::stories;
 
-    let new_story = self::models::NewEntry { title: "test_story" };
+    let new_story = self::models::NewStory { title: "test_story" };
 
     let connection = &mut establish_connection();
-    diesel::insert_into(entries::table)
+    diesel::insert_into(stories::table)
         .values(&new_story)
-        .returning(Entry::as_returning())
+        .returning(Story::as_returning())
         .get_result(connection)
         .expect("Error saving new story");
-    Flash::success(Redirect::to("/"), "Entry successfully created.")
+    Flash::success(Redirect::to("/"), "Story successfully created.")
 }
 
 #[delete("/<story_id>")]
 fn delete_story(story_id: i32) -> Flash<Redirect> {
-    use self::schema::entries::dsl::*;
+    use self::schema::stories::dsl::*;
 
     let connection = &mut establish_connection();
-    diesel::delete(entries.filter(id.eq(story_id)))
+    diesel::delete(stories.filter(id.eq(story_id)))
         .execute(connection)
-        .expect("Error deleting entries");
+        .expect("Error deleting stories");
 
-    Flash::success(Redirect::to("/"), "Entry successfully deleted.")
+    Flash::success(Redirect::to("/"), "Story successfully deleted.")
 }
 
 #[get("/stories/<story_id>")]
 fn story(story_id: i32) -> Template {
-    use self::schema::entries::dsl::*;
+    use self::schema::stories::dsl::*;
 
     let connection = &mut establish_connection();
 
-    let mut query_result = entries
+    let mut query_result = stories
         .filter(id.eq(story_id))
-        .select(Entry::as_select())
+        .select(Story::as_select())
         .load(connection)
-        .expect("Error loading entries");
+        .expect("Error loading stories");
 
     let story_o = query_result.pop();
-    let story: Entry;
+    let story: Story;
     match story_o {
         Some(v) => story = v,
         _ => return Template::render("story", context! {}),
@@ -88,15 +88,15 @@ fn story(story_id: i32) -> Template {
 
 #[get("/")]
 fn index() -> Template {
-    use self::schema::entries::dsl::*;
+    use self::schema::stories::dsl::*;
 
     let connection = &mut establish_connection();
 
-    let query_result = entries
+    let query_result = stories
         .limit(5)
-        .select(Entry::as_select())
+        .select(Story::as_select())
         .load(connection)
-        .expect("Error loading entries");
+        .expect("Error loading stories");
 
     let mut lits: Vec<Lit> = Vec::new();
     for story in query_result {
