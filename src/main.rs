@@ -9,6 +9,7 @@ use rocket::{
     fs::{FileServer, relative},
     serde::Serialize,
     response::{Redirect, Flash},
+    form::Form,
 };
 use rocket_dyn_templates::{Template, context};
 use diesel::{
@@ -33,11 +34,31 @@ pub struct Lit {
     title: String,
 }
 
+#[derive(FromForm)]
+pub struct CreateStory<'r> {
+    title: &'r str,
+}
+
 #[get("/create")]
-fn create_story() -> Flash<Redirect> {
+fn create_story_get() -> Flash<Redirect> {
     use schema::stories;
 
     let new_story = self::models::NewStory { title: "test_story" };
+
+    let connection = &mut establish_connection();
+    diesel::insert_into(stories::table)
+        .values(&new_story)
+        .returning(Story::as_returning())
+        .get_result(connection)
+        .expect("Error saving new story");
+    Flash::success(Redirect::to("/"), "Story successfully created.")
+}
+
+#[post("/create", data="<story>")]
+fn create_story(story: Form<CreateStory<'_>>) -> Flash<Redirect> {
+    use schema::stories;
+    
+    let new_story = self::models::NewStory { title: story.title };
 
     let connection = &mut establish_connection();
     diesel::insert_into(stories::table)
@@ -114,6 +135,7 @@ fn rocket() -> _ {
         .mount("/", routes![
             index,
             create_story,
+            create_story_get,
             delete_story,
             story,
         ])
