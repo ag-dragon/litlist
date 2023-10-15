@@ -10,6 +10,12 @@
     <p>story page testing</p>
     {% if lit %}
         <p>{{lit.id}}. {{lit.title}}
+        <form action="/{{lit.id}}" method="post">
+            <input type="hidden" name="_method" value="PUT" />
+            <label for="title">Title:</label>
+            <input type="text" name="title" />
+            <button type="submit">Update Story</button>
+        </form>
     {% endif %}
     <p><a href="/">Back</a></p>
 </body>

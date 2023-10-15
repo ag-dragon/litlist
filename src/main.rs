@@ -66,6 +66,22 @@ fn delete_story(story_id: i32) -> Flash<Redirect> {
     Flash::success(Redirect::to("/"), "Story successfully deleted.")
 }
 
+#[put("/<story_id>", data="<story>")]
+fn update_story(story_id: i32, story: Form<CreateStory<'_>>) -> Flash<Redirect> {
+    use schema::stories::dsl::*;
+
+    let new_story = self::models::NewStory { title: story.title };
+
+    let connection = &mut establish_connection();
+    diesel::update(stories.find(story_id))
+        .set(new_story)
+        .returning(Story::as_returning())
+        .execute(connection)
+        .unwrap();
+
+    Flash::success(Redirect::to(format!("/stories/{}", story_id)), "Story successfully, updated.")
+}
+
 #[get("/stories/<story_id>")]
 fn story(story_id: i32) -> Template {
     use self::schema::stories::dsl::*;
@@ -120,6 +136,7 @@ fn rocket() -> _ {
         .mount("/", routes![
             index,
             create_story,
+            update_story,
             delete_story,
             story,
         ])

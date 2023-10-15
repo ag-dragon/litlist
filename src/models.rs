@@ -9,7 +9,7 @@ pub struct Story {
     pub title: String,
 }
 
-#[derive(Insertable)]
+#[derive(Insertable, AsChangeset)]
 #[diesel(table_name = stories)]
 pub struct NewStory<'a> {
     pub title: &'a str,
