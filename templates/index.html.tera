@@ -22,5 +22,4 @@
         <input type="text" name="title" />
         <button type="submit">Add Story</button>
     </form>
-    <p><a href="create">Create</a></p>
 </body>
