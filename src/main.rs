@@ -43,7 +43,15 @@ pub struct CreateStory<'r> {
 fn create_story(story: Form<CreateStory<'_>>) -> Flash<Redirect> {
     use schema::stories;
     
-    let new_story = self::models::NewStory { title: story.title };
+    let new_story = self::models::NewStory {
+        title: story.title.to_string(),
+        author: "no_one".to_string(),
+        rating: None,
+        comment: None,
+        progress: None,
+        length: None,
+        link: None,
+    };
 
     let connection = &mut establish_connection();
     diesel::insert_into(stories::table)
@@ -70,7 +78,15 @@ fn delete_story(story_id: i32) -> Flash<Redirect> {
 fn update_story(story_id: i32, story: Form<CreateStory<'_>>) -> Flash<Redirect> {
     use schema::stories::dsl::*;
 
-    let new_story = self::models::NewStory { title: story.title };
+    let new_story = self::models::NewStory {
+        title: story.title.to_string(),
+        author: "no_one".to_string(),
+        rating: None,
+        comment: None,
+        progress: None,
+        length: None,
+        link: None,
+    };
 
     let connection = &mut establish_connection();
     diesel::update(stories.find(story_id))
