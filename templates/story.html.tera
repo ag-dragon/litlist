@@ -9,7 +9,15 @@
 <body>
     <p>story page testing</p>
     {% if lit %}
-        <p>{{lit.id}}. {{lit.title}}
+        <p>{{lit.id}}. {{lit.title}}</p>
+        <p>
+            author: {{lit.author}},
+            rating: {{lit.rating}},
+            commnet: {{lit.comment}},
+            progress: {{lit.progress}},
+            length: {{lit.length}},
+            link: {{lit.link}}
+        </p>
         <form action="/{{lit.id}}" method="post">
             <input type="hidden" name="_method" value="PUT" />
             <label for="title">Title:</label>

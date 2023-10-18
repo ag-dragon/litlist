@@ -32,11 +32,23 @@ pub fn establish_connection() -> PgConnection {
 pub struct Lit {
     id: i32,
     title: String,
+    author: String,
+    rating: i32,
+    comment: String,
+    progress: i32,
+    length: i32,
+    link: String,
 }
 
 #[derive(FromForm)]
 pub struct CreateStory<'r> {
     title: &'r str,
+    author: &'r str,
+    rating: i32,
+    comment: &'r str,
+    progress: i32,
+    length: i32,
+    link: &'r str,
 }
 
 #[post("/create", data="<story>")]
@@ -45,12 +57,12 @@ fn create_story(story: Form<CreateStory<'_>>) -> Flash<Redirect> {
     
     let new_story = self::models::NewStory {
         title: story.title.to_string(),
-        author: "no_one".to_string(),
-        rating: None,
-        comment: None,
-        progress: None,
-        length: None,
-        link: None,
+        author: story.author.to_string(),
+        rating: Some(story.rating),
+        comment: Some(story.comment.to_string()),
+        progress: Some(story.progress),
+        length: Some(story.length),
+        link: Some(story.link.to_string()),
     };
 
     let connection = &mut establish_connection();
@@ -80,12 +92,12 @@ fn update_story(story_id: i32, story: Form<CreateStory<'_>>) -> Flash<Redirect> 
 
     let new_story = self::models::NewStory {
         title: story.title.to_string(),
-        author: "no_one".to_string(),
-        rating: None,
-        comment: None,
-        progress: None,
-        length: None,
-        link: None,
+        author: story.title.to_string(),
+        rating: Some(story.rating),
+        comment: Some(story.comment.to_string()),
+        progress: Some(story.progress),
+        length: Some(story.length),
+        link: Some(story.link.to_string()),
     };
 
     let connection = &mut establish_connection();
@@ -119,6 +131,12 @@ fn story(story_id: i32) -> Template {
     let lit = Lit {
         id: story.id,
         title: story.title,
+        author: story.author,
+        rating: story.rating.unwrap(),
+        comment: story.comment.unwrap(),
+        progress: story.progress.unwrap(),
+        length: story.length.unwrap(),
+        link: story.link.unwrap(),
     };
 
     Template::render("story", context! { lit })
@@ -138,7 +156,16 @@ fn index() -> Template {
 
     let mut lits: Vec<Lit> = Vec::new();
     for story in query_result {
-        lits.push(Lit { id: story.id, title: story.title });
+        lits.push(Lit {
+            id: story.id,
+            title: story.title,
+            author: story.author,
+            rating: story.rating.unwrap(),
+            comment: story.comment.unwrap(),
+            progress: story.progress.unwrap(),
+            length: story.length.unwrap(),
+            link: story.link.unwrap(),
+        });
     }
 
     Template::render("index", context! { lits })
