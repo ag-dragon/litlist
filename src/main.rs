@@ -51,6 +51,7 @@ pub struct CreateStory<'r> {
     link: &'r str,
 }
 
+
 #[post("/create", data="<story>")]
 fn create_story(story: Form<CreateStory<'_>>) -> Flash<Redirect> {
     use schema::stories;
@@ -86,23 +87,26 @@ fn delete_story(story_id: i32) -> Flash<Redirect> {
     Flash::success(Redirect::to("/"), "Story successfully deleted.")
 }
 
-#[put("/<story_id>", data="<story>")]
-fn update_story(story_id: i32, story: Form<CreateStory<'_>>) -> Flash<Redirect> {
-    use schema::stories::dsl::*;
+use crate::schema::stories;
+#[derive(FromForm, AsChangeset)]
+#[diesel(table_name = stories)]
+pub struct UpdateStory<'r> {
+    title: Option<&'r str>,
+    author: Option<&'r str>,
+    rating: Option<i32>,
+    comment: Option<&'r str>,
+    progress: Option<i32>,
+    length: Option<i32>,
+    link: Option<&'r str>,
+}
 
-    let new_story = self::models::NewStory {
-        title: story.title.to_string(),
-        author: story.title.to_string(),
-        rating: Some(story.rating),
-        comment: Some(story.comment.to_string()),
-        progress: Some(story.progress),
-        length: Some(story.length),
-        link: Some(story.link.to_string()),
-    };
+#[put("/<story_id>", data="<story>")]
+fn update_story(story_id: i32, story: Form<UpdateStory<'_>>) -> Flash<Redirect> {
+    use schema::stories::dsl::*;
 
     let connection = &mut establish_connection();
     diesel::update(stories.find(story_id))
-        .set(new_story)
+        .set(story.into_inner())
         .returning(Story::as_returning())
         .execute(connection)
         .unwrap();
