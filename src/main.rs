@@ -7,7 +7,6 @@ use models::*;
 
 use rocket::{
     fs::{FileServer, relative},
-    serde::Serialize,
     response::{Redirect, Flash},
     form::Form,
 };
@@ -25,19 +24,6 @@ pub fn establish_connection() -> PgConnection {
     let database_url = env::var("DATABASE_URL").expect("DATABASE_URL must be set");
     PgConnection::establish(&database_url)
         .unwrap_or_else(|_| panic!("Error connecting to {}", database_url))
-}
-
-#[derive(Serialize)]
-#[serde(crate = "rocket::serde")]
-pub struct Lit {
-    id: i32,
-    title: String,
-    author: String,
-    rating: i32,
-    comment: String,
-    progress: i32,
-    length: i32,
-    link: String,
 }
 
 #[derive(FromForm)]
@@ -132,18 +118,8 @@ fn story(story_id: i32) -> Template {
         Some(v) => story = v,
         _ => return Template::render("story", context! {}),
     }
-    let lit = Lit {
-        id: story.id,
-        title: story.title,
-        author: story.author,
-        rating: story.rating.unwrap(),
-        comment: story.comment.unwrap(),
-        progress: story.progress.unwrap(),
-        length: story.length.unwrap(),
-        link: story.link.unwrap(),
-    };
 
-    Template::render("story", context! { lit })
+    Template::render("story", context! { story })
 }
 
 #[get("/")]
@@ -152,27 +128,13 @@ fn index() -> Template {
 
     let connection = &mut establish_connection();
 
-    let query_result = stories
+    let story_list = stories
         .limit(5)
         .select(Story::as_select())
         .load(connection)
         .expect("Error loading stories");
 
-    let mut lits: Vec<Lit> = Vec::new();
-    for story in query_result {
-        lits.push(Lit {
-            id: story.id,
-            title: story.title,
-            author: story.author,
-            rating: story.rating.unwrap(),
-            comment: story.comment.unwrap(),
-            progress: story.progress.unwrap(),
-            length: story.length.unwrap(),
-            link: story.link.unwrap(),
-        });
-    }
-
-    Template::render("index", context! { lits })
+    Template::render("index", context! { story_list })
 }
 
 #[launch]

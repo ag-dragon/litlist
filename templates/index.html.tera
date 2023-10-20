@@ -8,7 +8,7 @@
 
 <body>
     <p>testing testing</p>
-    {% for story in lits %}
+    {% for story in story_list %}
     <p>
         <a href="stories/{{story.id}}">{{story.id}}. {{story.title}}</a>
         <form class="inline" action="/{{story.id}}" method="post">

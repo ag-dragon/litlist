@@ -8,17 +8,29 @@
 
 <body>
     <p>story page testing</p>
-    {% if lit %}
-        <p>{{lit.id}}. {{lit.title}}</p>
+    {% if story %}
+        <p>{{story.id}}. {{story.title}}</p>
         <p>
-            author: {{lit.author}},
-            rating: {{lit.rating}},
-            commnet: {{lit.comment}},
-            progress: {{lit.progress}},
-            length: {{lit.length}},
-            link: {{lit.link}}
+            {% if story.author %}
+                author: {{story.author}},
+            {% endif %}
+            {% if story.rating %}
+                rating: {{story.rating}},
+            {% endif %}
+            {% if story.comment %}
+                comment: {{story.comment}},
+            {% endif %}
+            {% if story.progress %}
+                progress: {{story.progress}},
+            {% endif %}
+            {% if story.length %}
+                length: {{story.length}},
+            {% endif %}
+            {% if story.link %}
+                link: {{story.link}}
+            {% endif %}
         </p>
-        <form action="/{{lit.id}}" method="post">
+        <form action="/{{story.id}}" method="post">
             <input type="hidden" name="_method" value="PUT" />
             <label for="title">Title:</label>
             <input type="text" name="title" />
