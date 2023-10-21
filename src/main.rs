@@ -27,29 +27,29 @@ pub fn establish_connection() -> PgConnection {
 }
 
 #[derive(FromForm)]
-pub struct CreateStory<'r> {
-    title: &'r str,
-    author: &'r str,
-    rating: i32,
-    comment: &'r str,
-    progress: i32,
-    length: i32,
-    link: &'r str,
+pub struct CreateStory {
+    title: String,
+    author: String,
+    rating: Option<i32>,
+    comment: Option<String>,
+    progress: Option<i32>,
+    length: Option<i32>,
+    link: Option<String>,
 }
 
 
 #[post("/create", data="<story>")]
-fn create_story(story: Form<CreateStory<'_>>) -> Flash<Redirect> {
+fn create_story(story: Form<CreateStory>) -> Flash<Redirect> {
     use schema::stories;
     
     let new_story = self::models::NewStory {
-        title: story.title.to_string(),
-        author: story.author.to_string(),
-        rating: Some(story.rating),
-        comment: Some(story.comment.to_string()),
-        progress: Some(story.progress),
-        length: Some(story.length),
-        link: Some(story.link.to_string()),
+        title: story.title.clone(),
+        author: story.author.clone(),
+        rating: story.rating.clone(),
+        comment: story.comment.clone(),
+        progress: story.progress.clone(),
+        length: story.length.clone(),
+        link: story.link.clone(),
     };
 
     let connection = &mut establish_connection();
