@@ -53,12 +53,18 @@ fn create_story(story: Form<CreateStory>) -> Flash<Redirect> {
     };
 
     let connection = &mut establish_connection();
-    diesel::insert_into(stories::table)
+    let res = diesel::insert_into(stories::table)
         .values(&new_story)
         .returning(Story::as_returning())
-        .get_result(connection)
-        .expect("Error saving new story");
-    Flash::success(Redirect::to("/"), "Story successfully created.")
+        .execute(connection);
+
+    match res {
+        Ok(_) => Flash::success(Redirect::to("/"), "Story successfully created."),
+        Err(e) => {
+            error_!("Story creation error: {}", e);
+            Flash::error(Redirect::to("/"), "Story could not be created due to internal error.")
+        }
+    }
 }
 
 #[delete("/<story_id>")]
@@ -66,11 +72,16 @@ fn delete_story(story_id: i32) -> Flash<Redirect> {
     use self::schema::stories::dsl::*;
 
     let connection = &mut establish_connection();
-    diesel::delete(stories.filter(id.eq(story_id)))
-        .execute(connection)
-        .expect("Error deleting stories");
+    let res = diesel::delete(stories.filter(id.eq(story_id)))
+        .execute(connection);
 
-    Flash::success(Redirect::to("/"), "Story successfully deleted.")
+    match res {
+        Ok(_) => Flash::success(Redirect::to("/"), "Story successfully deleted."),
+        Err(e) => {
+            error_!("Story deletion error: {}", e);
+            Flash::error(Redirect::to("/"), "Story could not be deleted due to internal error.")
+        }
+    }
 }
 
 use crate::schema::stories;
@@ -95,13 +106,21 @@ fn update_story(story_id: i32, story: Form<UpdateStory<'_>>) -> Flash<Redirect> 
     use schema::stories::dsl::*;
 
     let connection = &mut establish_connection();
-    diesel::update(stories.find(story_id))
+    let res = diesel::update(stories.find(story_id))
         .set(story.into_inner())
         .returning(Story::as_returning())
-        .execute(connection)
-        .unwrap();
+        .execute(connection);
 
-    Flash::success(Redirect::to(format!("/stories/{}", story_id)), "Story successfully, updated.")
+    match res {
+        Ok(_) => Flash::success(Redirect::to(format!("/stories/{}", story_id)), "Story successfully, updated."),
+        Err(e) => {
+            error_!("Story updating error: {}", e);
+            Flash::error(
+                Redirect::to(format!("/stories/{}", story_id)),
+                "Story could not be updated due to internal error."
+            )
+        }
+    }
 }
 
 #[get("/stories/<story_id>")]
