@@ -136,13 +136,10 @@ fn story(story_id: i32) -> Result<Template, Flash<Redirect>> {
         .expect("Error loading stories");
 
     let story_o = query_result.pop();
-    let story: Story;
     match story_o {
-        Some(v) => story = v,
-        _ => return Err(Flash::error(Redirect::to("/"), format!("No story with id: {}", story_id))),
+        Some(story) => Ok(Template::render("story", context! { story })),
+        _ => Err(Flash::error(Redirect::to("/"), format!("No story with id: {}", story_id))),
     }
-
-    Ok(Template::render("story", context! { story }))
 }
 
 #[get("/")]
