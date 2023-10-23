@@ -124,7 +124,7 @@ fn update_story(story_id: i32, story: Form<UpdateStory<'_>>) -> Flash<Redirect> 
 }
 
 #[get("/stories/<story_id>")]
-fn story(story_id: i32) -> Template {
+fn story(story_id: i32) -> Result<Template, Flash<Redirect>> {
     use self::schema::stories::dsl::*;
 
     let connection = &mut establish_connection();
@@ -139,10 +139,10 @@ fn story(story_id: i32) -> Template {
     let story: Story;
     match story_o {
         Some(v) => story = v,
-        _ => return Template::render("story", context! {}),
+        _ => return Err(Flash::error(Redirect::to("/"), format!("No story with id: {}", story_id))),
     }
 
-    Template::render("story", context! { story })
+    Ok(Template::render("story", context! { story }))
 }
 
 #[get("/")]
