@@ -1,27 +1,33 @@
+{% extends "base" %}
+
+{% block head %}
+    {{ super() }}
+{% endblock head %}
+
 {% block content %}
     <p>story page testing</p>
     {% if story %}
         <p>{{story.id}}. {{story.title}}</p>
-        <p>
+        <ul>
             {% if story.author %}
-                author: {{story.author}},
+            <li>author: {{story.author}}</li>
             {% endif %}
             {% if story.rating %}
-                rating: {{story.rating}},
+            <li>rating: {{story.rating}}</li>
             {% endif %}
             {% if story.comment %}
-                comment: {{story.comment}},
+            <li>comment: {{story.comment}}</li>
             {% endif %}
             {% if story.progress %}
-                progress: {{story.progress}},
+            <li>progress: {{story.progress}}</li>
             {% endif %}
             {% if story.length %}
-                length: {{story.length}},
+            <li>length: {{story.length}}</li>
             {% endif %}
             {% if story.link %}
-                link: {{story.link}}
+            <li>link: {{story.link}}</li>
             {% endif %}
-        </p>
+        </ul>
         <form action="/{{story.id}}" method="post">
             <input type="hidden" name="_method" value="PUT" />
             <label for="title">Title:</label>

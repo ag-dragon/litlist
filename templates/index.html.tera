@@ -1,15 +1,17 @@
 {% extends "base" %}
 {% block content %}
-    <p>testing testing</p>
+    <p>Story List</p>
+    <ul>
     {% for story in story_list %}
-    <p>
-        <a href="stories/{{story.id}}">{{story.id}}. {{story.title}}</a>
+    <li>
+        <a href="stories/{{story.id}}">{{story.title}}</a>
         <form class="inline" action="/{{story.id}}" method="post">
             <input type="hidden" name="_method" value="delete" />
             <button type="submit">delete</button>
         </form>
-    </p>
+    </li>
     {% endfor %}
+    </ul>
     <form action="/create" method="post">
         <label for="title">Title:</label>
         <input type="text" name="title" />
