@@ -1,12 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <title>Litlist</title>
-</head>
-
-<body>
+{% extends "base" %}
+{% block content %}
     <p>testing testing</p>
     {% for story in story_list %}
     <p>
@@ -34,4 +27,4 @@
         <input type="text" name="link" />
         <button type="submit">Add Story</button>
     </form>
-</body>
+{% endblock content %}

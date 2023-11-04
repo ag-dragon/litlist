@@ -1,12 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <title>LitList</title>
-</head>
-
-<body>
+{% block content %}
     <p>story page testing</p>
     {% if story %}
         <p>{{story.id}}. {{story.title}}</p>
@@ -50,4 +42,4 @@
         </form>
     {% endif %}
     <p><a href="/">Back</a></p>
-</body>
+{% endblock content %}
