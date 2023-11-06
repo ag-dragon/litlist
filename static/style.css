@@ -1,2 +1,36 @@
-li { background: white; }
-li:nth-child(even) { background: gray; }
+html {
+    font-size: 20px;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+h1 {
+    font-size: 2rem;
+    margin: 0;
+    padding: 0;
+}
+
+.story-list li {
+    display: flex;
+    background: white;
+}
+
+.story-list li #list-title {
+    flex-grow: 1;
+}
+
+.story-list li:nth-child(even) {
+    background: gray;
+}
