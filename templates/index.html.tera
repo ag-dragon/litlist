@@ -1,27 +1,29 @@
 {% extends "base" %}
 {% block content %}
     <h1>Story List</h1>
-    <ul class="story-list">
-        <li id="list-headers">
-            <div id="header-title">Title</div>
-            <div id="header-author">Author</div>
-            <div id="header-rating">Rating</div>
-            <div id="header-progress">Progress</div>
-            <div id="header-options">Options</div>
-        </li>
+    <table>
+        <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Rating</th>
+            <th>Progress</th>
+            <th>Options</th>
+        </tr>
         {% for story in story_list %}
-        <li>
-            <div class="story-title"><a href="stories/{{story.id}}">{{story.title}}</a></div>
-            <div class="story-author">{{story.author}}</div>
-            <div class="story-options">
+        <tr>
+            <td class="story-title"><a href="stories/{{story.id}}">{{story.title}}</a></td>
+            <td class="story-author">{{story.author}}</td>
+            <td>{% if story.rating %}{{story.rating}}{% endif %}</td>
+            <td>{% if story.progress and story.length %}{{story.progress}}/{{story.length}}{% endif %}</td>
+            <td class="story-options">
                 <form class="inline" action="/{{story.id}}" method="post" id="list-delete">
                     <input type="hidden" name="_method" value="delete" />
                     <button type="submit">delete</button>
                 </form>
-            </div>
-        </li>
+            </td>
+        </tr>
         {% endfor %}
-    </ul>
+    </table>
     <form action="/create" method="post">
         <label for="title">Title:</label>
         <input type="text" name="title" />
