@@ -2,6 +2,10 @@
 {% block content %}
     <h1>Story List</h1>
     <ul class="story-list">
+        <li id="story-columns">
+            <div class="title">Title</div>
+            <div class="options">Options</div>
+        </li>
         {% for story in story_list %}
         <li>
             <a href="stories/{{story.id}}" id="list-title">{{story.title}}</a>

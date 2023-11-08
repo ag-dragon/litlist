@@ -27,10 +27,18 @@ h1 {
     background: white;
 }
 
+#story-columns {
+    background: cyan;
+}
+
+#story-columns .title {
+    flex-grow: 1;
+}
+
 .story-list li #list-title {
     flex-grow: 1;
 }
 
-.story-list li:nth-child(even) {
+.story-list li:nth-child(odd) {
     background: gray;
 }
