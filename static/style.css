@@ -27,15 +27,15 @@ h1 {
     background: white;
 }
 
-#story-columns {
+#list-headers {
     background: cyan;
 }
 
-#story-columns .title {
+#header-title {
     flex-grow: 1;
 }
 
-.story-list li #list-title {
+.story-list li .story-title {
     flex-grow: 1;
 }
 

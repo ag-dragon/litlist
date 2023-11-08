@@ -2,17 +2,23 @@
 {% block content %}
     <h1>Story List</h1>
     <ul class="story-list">
-        <li id="story-columns">
-            <div class="title">Title</div>
-            <div class="options">Options</div>
+        <li id="list-headers">
+            <div id="header-title">Title</div>
+            <div id="header-author">Author</div>
+            <div id="header-rating">Rating</div>
+            <div id="header-progress">Progress</div>
+            <div id="header-options">Options</div>
         </li>
         {% for story in story_list %}
         <li>
-            <a href="stories/{{story.id}}" id="list-title">{{story.title}}</a>
-            <form class="inline" action="/{{story.id}}" method="post" id="list-delete">
-                <input type="hidden" name="_method" value="delete" />
-                <button type="submit">delete</button>
-            </form>
+            <div class="story-title"><a href="stories/{{story.id}}">{{story.title}}</a></div>
+            <div class="story-author">{{story.author}}</div>
+            <div class="story-options">
+                <form class="inline" action="/{{story.id}}" method="post" id="list-delete">
+                    <input type="hidden" name="_method" value="delete" />
+                    <button type="submit">delete</button>
+                </form>
+            </div>
         </li>
         {% endfor %}
     </ul>
