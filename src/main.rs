@@ -110,7 +110,7 @@ fn update_story(story_id: i32, story: Form<UpdateStory<'_>>) -> Flash<Redirect> 
         .execute(connection);
 
     match res {
-        Ok(_) => Flash::success(Redirect::to(format!("/stories/{}", story_id)), "Story successfully, updated."),
+        Ok(_) => Flash::success(Redirect::to("/"), "Story successfully, updated."),
         Err(e) => {
             error_!("Story updating error: {}", e);
             Flash::error(
