@@ -27,6 +27,10 @@ table#story_list {
     border: 1px solid;
 }
 
+td.story-options {
+    display: flex;
+}
+
 .story-list li {
     display: flex;
     background: white;
