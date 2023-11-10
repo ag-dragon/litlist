@@ -93,11 +93,9 @@ pub struct UpdateStory<'r> {
     #[field(validate = len(1..))]
     author: Option<&'r str>,
     rating: Option<i32>,
-    #[field(validate = len(1..))]
     comment: Option<&'r str>,
     progress: Option<i32>,
     length: Option<i32>,
-    #[field(validate = len(1..))]
     link: Option<&'r str>,
 }
 
