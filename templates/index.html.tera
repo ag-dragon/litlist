@@ -1,8 +1,14 @@
 {% extends "base" %}
+
+{% block head %}
+    {{ super() }}
+    <script src="add_story.js" defer></script>
+{% endblock head %}
+
 {% block content %}
     <h1>Story List</h1>
-    <button>Add Story</button>
-    <dialog>
+    <dialog id="story_create_dialog">
+        <button id="close_story_create">Close</button>
         <form action="/create" method="post">
             <label for="title">Title:</label>
             <input type="text" name="title" />
@@ -20,10 +26,8 @@
             <input type="text" name="link" />
             <button type="submit">Add Story</button>
         </form>
-        <form method="dialog">
-            <button>X</button>
-        </form>
     </dialog>
+    <button id="show_story_create">Add Story</button>
     <table id="story_list">
         <tr>
             <th>Title</th>
