@@ -19,12 +19,34 @@ ul {
 
 a {
     text-decoration: none;
+    color: #BB86FC;
 }
 
 h1 {
     font-size: 2rem;
     margin: 0;
     padding: 0;
+}
+
+#header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.25rem;
+}
+
+#header .logo {
+    font-weight: 600;
+}
+
+#header ul {
+    display: flex;
+    gap: 16px;
+    opacity: 0.6;
+    font-weight: 400;
+}
+
+#header a {
+    color: #ffffff;
 }
 
 table#story_list {
@@ -41,25 +63,4 @@ table#story_list {
 
 td.story-options {
     display: flex;
-}
-
-.story-list li {
-    display: flex;
-    background: white;
-}
-
-#list-headers {
-    background: cyan;
-}
-
-#header-title {
-    flex-grow: 1;
-}
-
-.story-list li .story-title {
-    flex-grow: 1;
-}
-
-.story-list li:nth-child(odd) {
-    background: gray;
 }
