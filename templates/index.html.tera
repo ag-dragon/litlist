@@ -31,7 +31,7 @@
             <button id="show_story_create">Add Story</button>
             <input type="text" autocomplete="off" placeholder="Search">
             <input type="text" autocomplete="off" placeholder="Tags">
-            <label for="list_sort">Sort</label>
+            <label for="list_sort">Sort by</label>
             <select name="list_sort">
                 <option value="sort_by_title">Title</option>
                 <option value="sort_by_author">Author</option>
@@ -47,7 +47,12 @@
             </tr>
             {% for story in story_list %}
             <tr>
-                <td class="story-title"><a href="stories/{{story.id}}">{{story.title}}</a></td>
+                <td class="story-title">
+                    {{story.title}}
+                    {% if story.link %}
+                        <a href="https://{{story.link}}">&#x1F517;</a>
+                    {% endif %}
+                </td>
                 <td class="story-author">{{story.author}}</td>
                 <td>{% if story.rating %}{{story.rating}}{% endif %}</td>
                 <td>{% if story.progress and story.length %}{{story.progress}}/{{story.length}}{% endif %}</td>
