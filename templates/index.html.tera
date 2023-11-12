@@ -29,6 +29,13 @@
                 </form>
             </dialog>
             <button id="show_story_create">Add Story</button>
+            <input type="text" autocomplete="off" placeholder="Search">
+            <input type="text" autocomplete="off" placeholder="Tags">
+            <label for="list_sort">Sort</label>
+            <select name="list_sort">
+                <option value="sort_by_title">Title</option>
+                <option value="sort_by_author">Author</option>
+            </select>
         </div>
         <table id="story_list">
             <tr>

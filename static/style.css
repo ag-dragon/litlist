@@ -61,6 +61,12 @@ h1 {
     gap: 32px;
 }
 
+#list_options {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
 table#story_list {
     width: 100%;
     background: #292929;
