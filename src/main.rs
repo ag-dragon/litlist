@@ -147,7 +147,6 @@ fn index() -> Template {
     let connection = &mut establish_connection();
 
     let story_list = stories
-        .limit(5)
         .select(Story::as_select())
         .load(connection)
         .expect("Error loading stories");
