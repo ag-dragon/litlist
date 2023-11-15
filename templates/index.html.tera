@@ -60,8 +60,8 @@
                     {% endif %}
                     {% if story.comment %}
                         <div class="story_comment">
-                            <div class="story_comment_icon">?</div>
-                            <span class="story_comment_hidden">{{story.comment}}</span>
+                            <div class="story_comment_icon">&#x1F4AC;</div>
+                            <div class="story_comment_hidden">{{story.comment}}</div>
                         </div>
                     {% endif %}
                 </td>
