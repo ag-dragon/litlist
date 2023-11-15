@@ -33,6 +33,7 @@ h1 {
     padding: 16px;
     margin-bottom: 16px;
     background-color: #202020;
+    border-bottom: 0.1rem solid #BB86FC;
 }
 
 #header .logo {
@@ -70,7 +71,7 @@ h1 {
 button#show_story_create {
     font-size: 1.25rem;
     color: #121212;
-    background-color: #BB86FC;
+    background-color: #ffc166;
     border: none;
     border-radius: 4px;
 }
@@ -90,4 +91,23 @@ table#story_list {
 
 td.story-options {
     display: flex;
+}
+
+td.story_rating {
+    display: flex;
+}
+
+.story_comment {
+    position: relative;
+}
+
+.story_comment_hidden {
+    visibility: hidden;
+    position: absolute;
+    z-index: 1;
+}
+
+.story_comment_icon:hover + .story_comment_hidden {
+    visibility: visible;
+    color: yellow;
 }

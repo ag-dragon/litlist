@@ -54,7 +54,17 @@
                     {% endif %}
                 </td>
                 <td class="story-author">{{story.author}}</td>
-                <td>{% if story.rating %}{{story.rating}}{% endif %}</td>
+                <td class="story_rating">
+                    {% if story.rating %}
+                        {{story.rating}}
+                    {% endif %}
+                    {% if story.comment %}
+                        <div class="story_comment">
+                            <div class="story_comment_icon">?</div>
+                            <div class="story_comment_hidden">{{story.comment}}</div>
+                        </div>
+                    {% endif %}
+                </td>
                 <td>{% if story.progress and story.length %}{{story.progress}}/{{story.length}}{% endif %}</td>
                 <td class="story-options">
                     <dialog class="story_edit_dialog">
