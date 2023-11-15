@@ -61,7 +61,7 @@
                     {% if story.comment %}
                         <div class="story_comment">
                             <div class="story_comment_icon">?</div>
-                            <div class="story_comment_hidden">{{story.comment}}</div>
+                            <span class="story_comment_hidden">{{story.comment}}</span>
                         </div>
                     {% endif %}
                 </td>
