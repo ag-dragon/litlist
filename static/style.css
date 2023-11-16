@@ -76,6 +76,28 @@ button#show_story_create {
     border-radius: 4px;
 }
 
+button.show_story_edit {
+    color: #121212;
+    background-color: #ffc166;
+    border: none;
+    padding: 6px;
+}
+
+button.show_story_edit:hover {
+    background-color: #aa7c11;
+}
+
+button.story_delete {
+    color: hsl(0, 0%, 85%);
+    background-color: #404040;
+    border: none;
+    padding: 6px;
+}
+
+button.story_delete:hover {
+    background-color: #202020;
+}
+
 table#story_list {
     width: 100%;
     background: #292929;

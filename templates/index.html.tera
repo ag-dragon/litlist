@@ -91,7 +91,7 @@
                     <button class="show_story_edit">Edit</button>
                     <form class="inline" action="/{{story.id}}" method="post" id="list-delete">
                         <input type="hidden" name="_method" value="delete" />
-                        <button type="submit">delete</button>
+                        <button class ="story_delete" type="submit">delete</button>
                     </form>
                 </td>
             </tr>
