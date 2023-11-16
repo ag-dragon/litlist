@@ -88,6 +88,32 @@ dialog {
 dialog#story_create_dialog {
 }
 
+div#story_create_form {
+    display: flex;
+    flex-direction: column;
+}
+
+div#story_create_header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+div#story_create_header h1 {
+    align-self: center;
+}
+
+button#close_story_create {
+    max-width: max-content;
+    max-height: max-content;
+    align-self: center;
+    padding: 8px;
+    color: hsl(0, 0%, 85%);
+    background-color: #353535;
+    border: none;
+    border-radius: 4px;
+}
+
 dialog.story_edit_dialog {
 }
 

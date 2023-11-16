@@ -9,24 +9,29 @@
     <div id="list_content">
         <div id="list_options">
             <dialog id="story_create_dialog">
-                <button id="close_story_create">Close</button>
-                <form action="/create" method="post">
-                    <label for="title">Title:</label>
-                    <input type="text" name="title" />
-                    <label for="author">Author:</label>
-                    <input type="text" name="author" />
-                    <label for="rating">Rating:</label>
-                    <input type="number" name="rating" />
-                    <label for="comment">Comment:</label>
-                    <input type="text" name="comment" />
-                    <label for="progress">Progress:</label>
-                    <input type="number" name="progress" />
-                    <label for="length">Length:</label>
-                    <input type="number" name="length" />
-                    <label for="link">Link:</label>
-                    <input type="text" name="link" />
-                    <button type="submit">Add Story</button>
-                </form>
+                <div id="story_create_form">
+                    <div id="story_create_header">
+                        <h1>Add Story</h1>
+                        <button id="close_story_create">Close</button>
+                    </div>
+                    <form action="/create" method="post">
+                        <label for="title">Title:</label>
+                        <input type="text" name="title" />
+                        <label for="author">Author:</label>
+                        <input type="text" name="author" />
+                        <label for="rating">Rating:</label>
+                        <input type="number" name="rating" />
+                        <label for="comment">Comment:</label>
+                        <input type="text" name="comment" />
+                        <label for="progress">Progress:</label>
+                        <input type="number" name="progress" />
+                        <label for="length">Length:</label>
+                        <input type="number" name="length" />
+                        <label for="link">Link:</label>
+                        <input type="text" name="link" />
+                        <button type="submit">Save</button>
+                    </form>
+                </div>
             </dialog>
             <button id="show_story_create">Add Story</button>
             <input type="text" autocomplete="off" placeholder="Search">
@@ -91,7 +96,7 @@
                     <button class="show_story_edit">Edit</button>
                     <form class="inline" action="/{{story.id}}" method="post" id="list-delete">
                         <input type="hidden" name="_method" value="delete" />
-                        <button class ="story_delete" type="submit">delete</button>
+                        <button class ="story_delete" type="submit">Delete</button>
                     </form>
                 </td>
             </tr>
