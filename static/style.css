@@ -76,6 +76,21 @@ button#show_story_create {
     border-radius: 4px;
 }
 
+dialog {
+    max-width: 60%;
+    color: hsl(0, 0%, 85%);
+    background-color: #404040;
+    border: none;
+    border-radius: 6px;
+    box-shadow: 0px 0px 20px 5px #121212;
+}
+
+dialog#story_create_dialog {
+}
+
+dialog.story_edit_dialog {
+}
+
 button.show_story_edit {
     color: #121212;
     background-color: #ffc166;
@@ -89,7 +104,7 @@ button.show_story_edit:hover {
 
 button.story_delete {
     color: hsl(0, 0%, 85%);
-    background-color: #404040;
+    background-color: #393939;
     border: none;
     padding: 6px;
 }
